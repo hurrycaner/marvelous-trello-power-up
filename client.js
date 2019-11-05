@@ -8,8 +8,8 @@ var getIdBadge = function(t){
         .get('idShort')
         .then(function(result){
             return [{
-                title: 'Card Number', // for detail badges only
-                text: result
+                title: 'Card Number',
+                text: '#' + result
             }];
         })
 };
