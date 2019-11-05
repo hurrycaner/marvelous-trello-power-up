@@ -4,9 +4,14 @@
 
 TrelloPowerUp.initialize({
     'card-badges': function(t, options){
-        return t.card('idShort').get('idShort');
+        return [{
+            text: t.card('idShort').get('idShort')
+        }];
     },
     'card-detail-badges': function(t, options) {
-        return t.card('idShort').get('idShort');
+        return [{
+            title: 'Card Number', // for detail badges only
+            text: t.card('idShort').get('idShort')
+        }];
     }
 });
