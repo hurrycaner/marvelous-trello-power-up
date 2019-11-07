@@ -93,11 +93,13 @@ var getIdBadge = function (t) {
 //         });
 // };
 
-var onBtnClick = function (t, opts) {
+const onBtnClick = function (t, opts) {
     console.log('Someone clicked the button');
     console.log('t: ', t);
     console.log('opts: ', opts);
 };
+
+const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
 
 TrelloPowerUp.initialize({
     'card-badges': function (t, options) {
@@ -106,7 +108,7 @@ TrelloPowerUp.initialize({
     'card-back-section': function (t, options) {
         const cardBackSection = {
             title: 'My Card Back Section',
-            // icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
+            icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
             content: {
                 type: 'iframe',
                 url: t.signUrl('./card-back.html'),
