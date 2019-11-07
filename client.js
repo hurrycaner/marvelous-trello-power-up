@@ -99,35 +99,49 @@ var onBtnClick = function (t, opts) {
     console.log('opts: ', opts);
 };
 
+const epicBtnShow = {
+    // icon: GRAY_ICON,
+    text: 'Show Epic',
+    condition: 'always',
+    callback: function (t, opts) {
+        return t.set('card', 'private', 'epic', true)
+    }
+};
+
+const epicBtnHide = {
+    // icon: GRAY_ICON,
+    text: 'Hide Epic',
+    condition: 'always',
+    callback: function (t, opts) {
+        return t.set('card', 'private', 'epic', false)
+    }
+};
+
 TrelloPowerUp.initialize({
     'card-buttons': function (t, options) {
-        return t
-            .get('card', 'shared', 'epic', [])
-            .then(function (result) {
-                var ret = [{
-                    // icon: GRAY_ICON,
-                    text: 'Link to feature',
-                    callback: onBtnClick,
-                    condition: 'edit'
-                }];
-                if (result.length === 0) {
-                    ret.push({
-                        // icon: GRAY_ICON,
-                        text: 'Show Epic',
-                        callback: onBtnClick,
-                        condition: 'always'
-                    })
+        return Promise.all([
+            t.get('card', 'shared', 'feat', []),
+            t.get('card', 'private', 'epic', null)
+        ]).then(function (result) {
+            let ret = [{
+                // icon: GRAY_ICON,
+                text: 'Link to feature',
+                callback: onBtnClick,
+                condition: 'edit'
+            }];
+            if (result[1] === null) {
+                if (result[0] > 0) {
+                    ret.push(epicBtnHide);
                 } else {
-                    ret.push({
-                        // icon: GRAY_ICON,
-                        text: 'Hide Epic',
-                        callback: onBtnClick,
-                        condition: 'always'
-                    })
+                    ret.push(epicBtnShow);
                 }
-
-                return ret
-            })
+            } else if (result[1]) {
+                ret.push(epicBtnHide);
+            } else {
+                ret.push(epicBtnShow);
+            }
+            return ret
+        })
     },
     'card-badges': function (t, options) {
         return getIdBadge(t);
