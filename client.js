@@ -106,7 +106,7 @@ TrelloPowerUp.initialize({
     'card-back-section': function (t, options) {
         const cardBackSection = {
             title: 'My Card Back Section',
-            icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
+            // icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
             content: {
                 type: 'iframe',
                 url: t.signUrl('./card-back.html'),
