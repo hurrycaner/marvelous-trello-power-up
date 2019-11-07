@@ -111,14 +111,14 @@ TrelloPowerUp.initialize({
                     condition: 'edit'
                 }];
                 if (result.length === 0) {
-                    ret.unshift({
+                    ret.push({
                         // icon: GRAY_ICON,
                         text: 'Show Epic',
                         callback: onBtnClick,
                         condition: 'always'
                     })
                 } else {
-                    ret.unshift({
+                    ret.push({
                         // icon: GRAY_ICON,
                         text: 'Hide Epic',
                         callback: onBtnClick,
