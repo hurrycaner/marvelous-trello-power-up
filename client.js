@@ -99,29 +99,59 @@ var onBtnClick = function (t, opts) {
     console.log('opts: ', opts);
 };
 
-const epicBtnShow = {
-    // icon: GRAY_ICON,
-    text: 'Show Epic',
-    condition: 'always',
-    callback: function (t, opts) {
-        return t.set('card', 'private', 'epic', true)
-    }
-};
-
-const epicBtnHide = {
-    // icon: GRAY_ICON,
-    text: 'Hide Epic',
-    condition: 'always',
-    callback: function (t, opts) {
-        return t.set('card', 'private', 'epic', false)
-    }
-};
-
 TrelloPowerUp.initialize({
-    'card-buttons': function (t, options) {
+    'card-badges': function (t, options) {
+        return getIdBadge(t);
+    },
+    'card-back-section': function (t, options) {
+        const cardBackSection = {
+            title: 'My Card Back Section',
+            icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
+            content: {
+                type: 'iframe',
+                url: t.signUrl('./card-back.html'),
+                height: 230 // Max height is 500
+            }
+        };
         return Promise.all([
-            t.get('card', 'shared', 'feat', []),
-            t.get('card', 'private', 'epic', null)
+            t.get('card', 'private', 'epic', null),
+            t.get('card', 'shared', 'feat', [])
+        ]).then(function (result) {
+            if (result[0] === true) {
+                // mostra
+                return cardBackSection;
+            } else if (result[0] === false) {
+                // oculta
+                return null;
+            } else if (result[1] > 0) {
+                // mostra
+                return cardBackSection;
+            } else {
+                // oculta
+                return null;
+            }
+        });
+    },
+    'card-buttons': function (t, options) {
+        const epicBtnShow = {
+            // icon: GRAY_ICON,
+            text: 'Epic (show)',
+            condition: 'always',
+            callback: function (t, opts) {
+                return t.set('card', 'private', 'epic', true)
+            }
+        };
+        const epicBtnHide = {
+            // icon: GRAY_ICON,
+            text: 'Epic (hide)',
+            condition: 'always',
+            callback: function (t, opts) {
+                return t.set('card', 'private', 'epic', false)
+            }
+        };
+        return Promise.all([
+            t.get('card', 'private', 'epic', null),
+            t.get('card', 'shared', 'feat', [])
         ]).then(function (result) {
             let ret = [{
                 // icon: GRAY_ICON,
@@ -129,13 +159,11 @@ TrelloPowerUp.initialize({
                 callback: onBtnClick,
                 condition: 'edit'
             }];
-            if (result[1] === null) {
-                if (result[0] > 0) {
-                    ret.push(epicBtnHide);
-                } else {
-                    ret.push(epicBtnShow);
-                }
-            } else if (result[1]) {
+            if (result[0] === true) {
+                ret.push(epicBtnHide);
+            } else if (result[0] === false) {
+                ret.push(epicBtnShow);
+            } else if (result[1] > 0) {
                 ret.push(epicBtnHide);
             } else {
                 ret.push(epicBtnShow);
@@ -143,10 +171,7 @@ TrelloPowerUp.initialize({
             return ret
         })
     },
-    'card-badges': function (t, options) {
-        return getIdBadge(t);
-    },
     'card-detail-badges': function (t, options) {
-        return getIdBadge(t);
-    }
-});
+            return getIdBadge(t);
+        }
+    });
