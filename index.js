@@ -71,8 +71,6 @@ function showAuthorizationIframe(t) {
 //     });
 // }
 
-console.log(Trello)
-
 TrelloPowerUp.initialize({
     'board-buttons': function (t, opts) {
         return t.getRestApi()
