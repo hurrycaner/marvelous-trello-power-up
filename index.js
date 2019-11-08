@@ -41,11 +41,11 @@ function showAuthorizationIframe(t) {
     });
 }
 
-// function showSearchCardButton(t) {
+function showSearchCardButton(t) {
 //     return t.popup({
 //         title: 'Pull Requests',
 //         items: function (t, options) {
-//             console.log(Trello);
+    console.log("bla");
 //             // use options.search which is the search text entered so far
 //             // return a Promise that resolves to an array of items
 //             // similar to the items you provided in the client side version above
@@ -69,7 +69,7 @@ function showAuthorizationIframe(t) {
 //         //     searching: 'Buscando...'
 //         // }
 //     });
-// }
+}
 
 TrelloPowerUp.initialize({
     'board-buttons': function (t, opts) {
