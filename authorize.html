@@ -17,10 +17,19 @@
             t.getRestApi()
                 .authorize({scope: 'read'})
                 .then(function (t) {
-                    alert('Success!');
+                    t.alert({
+                        message: 'Autorização realizada com sucesso!🎉',
+                        duration: 6,
+                        display: 'success'
+                    });
+                    t.closePopup();
                 })
                 .catch(TrelloPowerUp.restApiError.AuthDeniedError, function () {
-                    alert('Cancelled!');
+                    t.alert({
+                        message: 'Autorização não realizada!🎉',
+                        duration: 6,
+                        display: 'error'
+                    });
                 })
         }, false);
     });
