@@ -36,7 +36,7 @@ const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-
 
 function showAuthorizationIframe(t) {
     return t.popup({
-        title: 'Authorize to continue',
+        title: 'Autorize para usar este recurso',
         url: './authorize.html'
     });
 }
