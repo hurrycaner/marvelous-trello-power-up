@@ -51,8 +51,6 @@ function showMenu(t) {
 }
 
 TrelloPowerUp.initialize({
-    appKey: "0d7257e46f480534e1d50427e2afb1ee",
-    appName: "Hurrycaner's Marvelous Power-Up",
     'board-buttons': function (t, opts) {
         return t.getRestApi()
             .isAuthorized()
@@ -158,4 +156,7 @@ TrelloPowerUp.initialize({
     'card-detail-badges': function (t, options) {
         return getIdBadge(t);
     }
+}, {
+    appKey: "0d7257e46f480534e1d50427e2afb1ee",
+    appName: "Hurrycaner's Marvelous Power-Up",
 });
