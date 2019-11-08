@@ -15,10 +15,16 @@
     t.render(function() {
         document.querySelector('button').addEventListener('click', function() {
             t.getRestApi()
-                .authorize({ scope: 'read,write' })
+                .authorize({
+                    scope: 'read,write',
+                    returnUrl: window.location.href
+                })
                 .then(function(t) {
                     alert('Success!');
-                });
+                })
+                .catch(TrelloPowerUp.restApiError.AuthDeniedError, function() {
+                    alert('Cancelled!');
+                })
         }, false);
     });
 </script>
