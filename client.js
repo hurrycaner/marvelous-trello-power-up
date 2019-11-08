@@ -16,92 +16,78 @@ var getIdBadge = function (t) {
         })
 };
 
-// var getCardButtons = function (t) {
-//     return t
-//             .get('card', 'shared', 'epic', [])
-//             .then(function (result) {
-//                 if (result.length === 0) {
-//                     //
-//                 }
-//
-//                 let done = 0;
-//                 let total = 0;
-//
-//                 for (let i = 0; i < result.length; i++) {
-//                     if (result[i] && result[i].name) {
-//                         if (done) done++;
-//                         total++;
-//                     }
-//                     if (total > 0) {
-//                         return [{
-//                             // its best to use static badges unless you need your badges
-//                             // to refresh you can mix and match between static and dynamic
-//                             title: 'Bla',
-//                             text: done + '/' + total,
-//                             color: null
-//                         }]
-//                     }
-//
-//                     // var feat = {
-//                     //     name: "",
-//                     //     done: false,
-//                     //     cardNum: "",
-//                     //     cardId: ""
-//                     // }
-//                 }
-//                 ret.push({
-//                     // usually you will provide a callback function to be run on button click
-//                     // we recommend that you use a popup on click generally
-//                     icon: GRAY_ICON, // don't use a colored icon here
-//                     text: 'Add feature',
-//                     callback: onBtnClick,
-//                     condition: 'edit'
-//                 });
-//             } else {
-//                 // is not epic
-//                 ret.push({
-//                     // usually you will provide a callback function to be run on button click
-//                     // we recommend that you use a popup on click generally
-//                     icon: GRAY_ICON, // don't use a colored icon here
-//                     text: 'Open Popup',
-//                     callback: onBtnClick,
-//                     condition: 'edit'
-//                 });
-//             }
-//             if (result[1]) {
-//                 // is feature
-//                 ret.push({
-//                     // usually you will provide a callback function to be run on button click
-//                     // we recommend that you use a popup on click generally
-//                     icon: GRAY_ICON, // don't use a colored icon here
-//                     text: 'Open Popup',
-//                     callback: onBtnClick,
-//                     condition: 'edit'
-//                 });
-//             } else {
-//                 // is not feature
-//                 ret.push({
-//                     // usually you will provide a callback function to be run on button click
-//                     // we recommend that you use a popup on click generally
-//                     icon: GRAY_ICON, // don't use a colored icon here
-//                     text: 'Open Popup',
-//                     callback: onBtnClick,
-//                     condition: 'edit'
-//                 });
-//             }
-//             return ret;
-//         });
-// };
-
 const onBtnClick = function (t, opts) {
     console.log('Someone clicked the button');
     console.log('t: ', t);
     console.log('opts: ', opts);
 };
 
+
+var goToCardShortId = function (t, opts) {
+    console.log('Someone clicked the button goToCardShortId');
+
+    // https://api.trello.com/1/boards/enOm8RT9/cards/?fields=idShort&key=0d7257e46f480534e1d50427e2afb1ee&token=69c07de3b5390280a10e498f6d5de55fcb778404edf8daaa926d17ac24410475
+};
+
+const WHITE_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg';
+const BLACK_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg';
 const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
 
+
+function showIframe(t) {
+    return t.popup({
+        title: 'Authorize to continue',
+        url: './authorize.html'
+    });
+}
+
+function showMenu(t) {
+    return t.popup({
+        title: 'Do something cool',
+        items: [
+            // …
+        ]
+    });
+}
+
 TrelloPowerUp.initialize({
+    appKey: "0d7257e46f480534e1d50427e2afb1ee",
+    appName: "Hurrycaner's Marvelous Power-Up",
+    'board-buttons': function (t, opts) {
+        return t.getRestApi()
+            .isAuthorized()
+            .then(function (isAuthorized) {
+                if (isAuthorized) {
+                    return [{
+                        text: 'David\'s Power-Up',
+                        icon: {
+                            dark: WHITE_ICON,
+                            light: BLACK_ICON
+                        },
+                        callback: showMenu
+                    }];
+                } else {
+                    return [{
+                        text: 'David\'s Power-Up',
+                        icon: {
+                            dark: WHITE_ICON,
+                            light: BLACK_ICON
+                        },
+                        callback: showIframe
+                    }];
+                }
+            });
+        // return [{
+        //     // we can either provide a button that has a callback function
+        //     icon: {
+        //         dark: WHITE_ICON,
+        //         light: BLACK_ICON
+        //     },
+        //     text: 'Callback',
+        //     callback: goToCardShortId,
+        //     condition: 'edit'
+        // }]
+    },
     'card-badges': function (t, options) {
         return getIdBadge(t);
     },
@@ -120,16 +106,12 @@ TrelloPowerUp.initialize({
             t.get('card', 'shared', 'feat', [])
         ]).then(function (result) {
             if (result[0] === true) {
-                // mostra
                 return cardBackSection;
             } else if (result[0] === false) {
-                // oculta
                 return null;
             } else if (result[1] > 0) {
-                // mostra
                 return cardBackSection;
             } else {
-                // oculta
                 return null;
             }
         });
@@ -156,7 +138,7 @@ TrelloPowerUp.initialize({
             t.get('card', 'shared', 'feat', [])
         ]).then(function (result) {
             let ret = [{
-                // icon: GRAY_ICON,
+                icon: GRAY_ICON,
                 text: 'Link to feature',
                 callback: onBtnClick,
                 condition: 'edit'
@@ -174,6 +156,6 @@ TrelloPowerUp.initialize({
         })
     },
     'card-detail-badges': function (t, options) {
-            return getIdBadge(t);
-        }
-    });
+        return getIdBadge(t);
+    }
+});

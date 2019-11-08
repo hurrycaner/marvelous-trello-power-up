@@ -32,3 +32,7 @@ https://developers.trello.com/reference#card-badges
 - [ ] card-detail-badges
     - [ ] Texto: card magic number
  
+
+https://api.trello.com/1/boards/enOm8RT9/cards/?fields=idShort,name,labels&key=0d7257e46f480534e1d50427e2afb1ee&token=69c07de3b5390280a10e498f6d5de55fcb778404edf8daaa926d17ac24410475
+
+https://trello.com/app-key
