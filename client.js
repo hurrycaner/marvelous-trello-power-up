@@ -34,7 +34,7 @@ const BLACK_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827
 const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
 
 
-function showIframe(t) {
+function showAuthorizationIframe(t) {
     return t.popup({
         title: 'Authorize to continue',
         url: './authorize.html'
@@ -57,7 +57,7 @@ TrelloPowerUp.initialize({
             .then(function (isAuthorized) {
                 if (isAuthorized) {
                     return [{
-                        text: 'David\'s Power-Up',
+                        text: 'Open card #',
                         icon: {
                             dark: WHITE_ICON,
                             light: BLACK_ICON
@@ -66,25 +66,15 @@ TrelloPowerUp.initialize({
                     }];
                 } else {
                     return [{
-                        text: 'David\'s Power-Up',
+                        text: 'Open card #',
                         icon: {
                             dark: WHITE_ICON,
                             light: BLACK_ICON
                         },
-                        callback: showIframe
+                        callback: showAuthorizationIframe
                     }];
                 }
             });
-        // return [{
-        //     // we can either provide a button that has a callback function
-        //     icon: {
-        //         dark: WHITE_ICON,
-        //         light: BLACK_ICON
-        //     },
-        //     text: 'Callback',
-        //     callback: goToCardShortId,
-        //     condition: 'edit'
-        // }]
     },
     'card-badges': function (t, options) {
         return getIdBadge(t);

@@ -2,27 +2,25 @@
 <html lang=en>
 <head>
     <meta charset=utf-8>
-    <title>Authorize</title>
+    <title>Autorizar</title>
 </head>
 <body>
-<button type=button>Click to authorize</button>
+<p>Você precisa autorizar para usar este recurso!</p>
+<button type=button>Autorizar</button>
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
 <script>
     var t = window.TrelloPowerUp.iframe({
         appKey: "0d7257e46f480534e1d50427e2afb1ee",
         appName: "Hurrycaner's Marvelous Power-Up",
     });
-    t.render(function() {
-        document.querySelector('button').addEventListener('click', function() {
+    t.render(function () {
+        document.querySelector('button').addEventListener('click', function () {
             t.getRestApi()
-                .authorize({
-                    scope: 'read,write',
-                    returnUrl: window.location.href
-                })
-                .then(function(t) {
+                .authorize({scope: 'read'})
+                .then(function (t) {
                     alert('Success!');
                 })
-                .catch(TrelloPowerUp.restApiError.AuthDeniedError, function() {
+                .catch(TrelloPowerUp.restApiError.AuthDeniedError, function () {
                     alert('Cancelled!');
                 })
         }, false);
