@@ -57,35 +57,37 @@ function showSearchCardButton(t, opts) {
                 // use options.search which is the search text entered so far
                 // return a Promise that resolves to an array of items
                 // similar to the items you provided in the client side version above
+                Promise()
                 Trello.get(
                     "boards/" + t.getContext().board + "/cards",
                     {
                         query: options.search,
                         fields: 'idShort'
-                    },
-                    function (result) {
-                        console.log(result);
-                        console.log('search: ', options.search, typeof options.search);
-                        console.log('options: ', options);
-                        if (options.search.length === 0) {
-                            return [];
-                        }
-                        result.filter(function (i) {
-                            if (i.idShort == options.search) {
-                                console.log("abacate", i);
-                                return [{
-                                    text: "#" + i.idShort,
-                                    callback: function (t, opts) {
-                                        return t.showCard(i.id);
-                                    }
-                                }]
+                    })
+                    .then(
+                        function (result) {
+                            console.log(result);
+                            console.log('search: ', options.search, typeof options.search);
+                            console.log('options: ', options);
+                            if (options.search.length === 0) {
+                                return [];
                             }
-                        });
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                            result.filter(function (i) {
+                                if (i.idShort == options.search) {
+                                    console.log("abacate", i);
+                                    return [{
+                                        text: "#" + i.idShort,
+                                        callback: function (t, opts) {
+                                            return t.showCard(i.id);
+                                        }
+                                    }]
+                                }
+                            });
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    )
 
                 // return new Promise(function (resolve) {
                 //     // you'd probably be making a network request at this point
