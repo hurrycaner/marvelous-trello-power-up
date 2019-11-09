@@ -1,4 +1,5 @@
 /* global TrelloPowerUp */
+/* global Trello */
 
 // https://developers.trello.com/reference#card-badges
 
@@ -45,10 +46,35 @@ function showSearchCardButton(t) {
 //     return t.popup({
 //         title: 'Pull Requests',
 //         items: function (t, options) {
-    console.log('t: ', t);
-    console.log('getRestApi: ', t.getRestApi());
-    console.log('key: ', t.getRestApi().getKey());
-    console.log('token: ', t.getRestApi().getToken());
+    var context = t.getContext();
+    return t.getRestApi().getToken().then(function(token) {
+        Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
+        Trello.setToken(token);
+        Trello.authorize({
+            type: 'popup',
+            name: 'Hurrycaner\'s Marvelous Power-Up',
+            persist: false,
+            interactive: false,
+            expiration: 'never'
+        });
+        Trello.get("/boards/" + t.getContext().board + "/cards/?fields=idShort",
+            function (result) {
+                console.log(result);
+            },
+            function (error) {
+                console.log(error);
+            })
+    })
+    // authorizeOpts =
+    //   type - "redirect" or "popup"
+    //   name - Name to display
+    //   persist - Save the token to local storage?
+    //   interactive - If false, don't redirect or popup, only use the stored
+    //     token, if one exists
+    //   scope - The permissions we're requesting
+    //   expiration - When we want the requested token to expire ("1hour",
+    //     "1day", "30days", "never")
+
 //             // use options.search which is the search text entered so far
 //             // return a Promise that resolves to an array of items
 //             // similar to the items you provided in the client side version above
@@ -72,97 +98,97 @@ function showSearchCardButton(t) {
 //         //     searching: 'Buscando...'
 //         // }
 //     });
-}
+    }
 
-TrelloPowerUp.initialize({
-    'board-buttons': function (t, opts) {
-        return t.getRestApi()
-            .isAuthorized()
-            .then(function (isAuthorized) {
-                if (isAuthorized) {
-                    return [{
-                        text: 'Abrir Card #',
-                        callback: showSearchCardButton
-                    }];
+    TrelloPowerUp.initialize({
+        'board-buttons': function (t, opts) {
+            return t.getRestApi()
+                .isAuthorized()
+                .then(function (isAuthorized) {
+                    if (isAuthorized) {
+                        return [{
+                            text: 'Abrir Card #',
+                            callback: showSearchCardButton
+                        }];
+                    } else {
+                        return [{
+                            text: 'Abrir Card #',
+                            callback: showAuthorizationIframe
+                        }];
+                    }
+                });
+        },
+        'card-badges': function (t, options) {
+            return getIdBadge(t);
+        },
+        'card-back-section': function (t, options) {
+            const cardBackSection = {
+                title: 'My Card Back Section',
+                icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
+                content: {
+                    type: 'iframe',
+                    url: t.signUrl('./card-back.html'),
+                    height: 230 // Max height is 500
+                }
+            };
+            return Promise.all([
+                t.get('card', 'private', 'epic', null),
+                t.get('card', 'shared', 'feat', [])
+            ]).then(function (result) {
+                if (result[0] === true) {
+                    return cardBackSection;
+                } else if (result[0] === false) {
+                    return null;
+                } else if (result[1] > 0) {
+                    return cardBackSection;
                 } else {
-                    return [{
-                        text: 'Abrir Card #',
-                        callback: showAuthorizationIframe
-                    }];
+                    return null;
                 }
             });
-    },
-    'card-badges': function (t, options) {
-        return getIdBadge(t);
-    },
-    'card-back-section': function (t, options) {
-        const cardBackSection = {
-            title: 'My Card Back Section',
-            icon: GRAY_ICON, // Must be a gray icon, colored icons not allowed.
-            content: {
-                type: 'iframe',
-                url: t.signUrl('./card-back.html'),
-                height: 230 // Max height is 500
-            }
-        };
-        return Promise.all([
-            t.get('card', 'private', 'epic', null),
-            t.get('card', 'shared', 'feat', [])
-        ]).then(function (result) {
-            if (result[0] === true) {
-                return cardBackSection;
-            } else if (result[0] === false) {
-                return null;
-            } else if (result[1] > 0) {
-                return cardBackSection;
-            } else {
-                return null;
-            }
-        });
-    },
-    'card-buttons': function (t, options) {
-        const epicBtnShow = {
-            // icon: GRAY_ICON,
-            text: 'Epic (show)',
-            condition: 'always',
-            callback: function (t, opts) {
-                return t.set('card', 'private', 'epic', true)
-            }
-        };
-        const epicBtnHide = {
-            // icon: GRAY_ICON,
-            text: 'Epic (hide)',
-            condition: 'always',
-            callback: function (t, opts) {
-                return t.set('card', 'private', 'epic', false)
-            }
-        };
-        return Promise.all([
-            t.get('card', 'private', 'epic', null),
-            t.get('card', 'shared', 'feat', [])
-        ]).then(function (result) {
-            let ret = [{
-                icon: GRAY_ICON,
-                text: 'Link to feature',
-                callback: onBtnClick,
-                condition: 'edit'
-            }];
-            if (result[0] === true) {
-                ret.push(epicBtnHide);
-            } else if (result[0] === false) {
-                ret.push(epicBtnShow);
-            } else if (result[1] > 0) {
-                ret.push(epicBtnHide);
-            } else {
-                ret.push(epicBtnShow);
-            }
-            return ret
-        })
-    },
-    'card-detail-badges': function (t, options) {
-        return getIdBadge(t);
-    }
-}, {
-    appKey: "0d7257e46f480534e1d50427e2afb1ee",
-    appName: "Hurrycaner's Marvelous Power-Up",
-});
+        },
+        'card-buttons': function (t, options) {
+            const epicBtnShow = {
+                // icon: GRAY_ICON,
+                text: 'Epic (show)',
+                condition: 'always',
+                callback: function (t, opts) {
+                    return t.set('card', 'private', 'epic', true)
+                }
+            };
+            const epicBtnHide = {
+                // icon: GRAY_ICON,
+                text: 'Epic (hide)',
+                condition: 'always',
+                callback: function (t, opts) {
+                    return t.set('card', 'private', 'epic', false)
+                }
+            };
+            return Promise.all([
+                t.get('card', 'private', 'epic', null),
+                t.get('card', 'shared', 'feat', [])
+            ]).then(function (result) {
+                let ret = [{
+                    icon: GRAY_ICON,
+                    text: 'Link to feature',
+                    callback: onBtnClick,
+                    condition: 'edit'
+                }];
+                if (result[0] === true) {
+                    ret.push(epicBtnHide);
+                } else if (result[0] === false) {
+                    ret.push(epicBtnShow);
+                } else if (result[1] > 0) {
+                    ret.push(epicBtnHide);
+                } else {
+                    ret.push(epicBtnShow);
+                }
+                return ret
+            })
+        },
+        'card-detail-badges': function (t, options) {
+            return getIdBadge(t);
+        }
+    }, {
+        appKey: "0d7257e46f480534e1d50427e2afb1ee",
+        appName: "Hurrycaner's Marvelous Power-Up",
+    });
