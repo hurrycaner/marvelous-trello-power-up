@@ -66,7 +66,9 @@ function showSearchCardButton(t, opts) {
                     function (result) {
                         console.log(result);
                         result.filter(function (i) {
-                            console.log('i: ', i);
+                            console.log('i: ', i.idShort, typeof i.idShort);
+                            console.log('search: ', options.search, typeof options.search);
+                            console.log('options: ', options);
                             if (i.idShort == options.search) {
                                 return [{
                                     text: i.idShort,
