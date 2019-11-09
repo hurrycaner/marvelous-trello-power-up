@@ -45,9 +45,7 @@ function showAuthorizationIframe(t) {
 }
 
 function showSearchCardButton(t, opts) {
-//     return t.popup({
-//         title: 'Pull Requests',
-//         items: function (t, options) {
+
     console.log('context: ', t.getContext());
     console.log('opts: ', opts);
     // return t.getRestApi().getToken().then(function (token) {
@@ -60,49 +58,52 @@ function showSearchCardButton(t, opts) {
         // interactive: false,
         expiration: 'never'
     });
-    Trello.get(
-        "/boards/" + t.getContext().board + "/cards/?fields=idShort",
-        function (result) {
-            console.log(result);
-        },
-        function (error) {
-            console.log(error);
-        }
-    )
-    // })
-    // authorizeOpts =
-    //   type - "redirect" or "popup"
-    //   name - Name to display
-    //   persist - Save the token to local storage?
-    //   interactive - If false, don't redirect or popup, only use the stored
-    //     token, if one exists
-    //   scope - The permissions we're requesting
-    //   expiration - When we want the requested token to expire ("1hour",
-    //     "1day", "30days", "never")
+    return t.popup({
+        title: 'Pull Requests',
+        items: function (t, options) {
+            // use options.search which is the search text entered so far
+            // return a Promise that resolves to an array of items
+            // similar to the items you provided in the client side version above
+            return Trello.get(
+                "/boards/" + t.getContext().board + "/cards/?query=" + options.search + "fields=idShort",
+                function (result) {
+                    console.log(result);
+                    return result.filter(function (i) {
+                        if (i.idShort == options.search) {
+                            return [{
+                                text: i.idShort,
+                                callback: function (t, opts) {
+                                    t.showCard(i.id);
+                                }
+                            }]
+                        }
+                    });
+                },
+                function (error) {
+                    console.log(error);
+                }
+            )
 
-//             // use options.search which is the search text entered so far
-//             // return a Promise that resolves to an array of items
-//             // similar to the items you provided in the client side version above
-//         //     return new Promise(function (resolve) {
-//         //         // you'd probably be making a network request at this point
-//         //         resolve([{
-//         //             text: 'Result 1',
-//         //             callback: function (t, opts) { ... }
-//         //         }, {
-//         //             text: 'Result 2',
-//         //             callback: function (t, opts) { ... }
-//         //         }]);
-//         //     });
-//         },
-//         // search: {
-//         //     // optional # of ms to debounce search to
-//         //     // defaults to 300, override must be larger than 300
-//         //     debounce: 300,
-//         //     placeholder: 'Buscar Card #',
-//         //     empty: 'Card não encontrado!',
-//         //     searching: 'Buscando...'
-//         // }
-//     });
+            // return new Promise(function (resolve) {
+            //     // you'd probably be making a network request at this point
+            //     resolve([{
+            //         text: 'Result 1',
+            //         callback: function (t, opts) { ... }
+            //     }, {
+            //         text: 'Result 2',
+            //         callback: function (t, opts) { ... }
+            //     }]);
+            // });
+        },
+        search: {
+            // optional # of ms to debounce search to
+            // defaults to 300, override must be larger than 300
+            debounce: 300,
+            placeholder: 'Card #',
+            empty: 'Card não encontrado!',
+            searching: 'Buscando...'
+        }
+    });
 }
 
 TrelloPowerUp.initialize({
