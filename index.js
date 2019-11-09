@@ -65,13 +65,13 @@ function showSearchCardButton(t, opts) {
                     },
                     function (result) {
                         console.log(result);
+                        console.log('search: ', options.search, typeof options.search);
+                        console.log('options: ', options);
                         result.filter(function (i) {
-                            console.log('i: ', i.idShort, typeof i.idShort);
-                            console.log('search: ', options.search, typeof options.search);
-                            console.log('options: ', options);
                             if (i.idShort == options.search) {
+                                console.log("abacate", i);
                                 return [{
-                                    text: i.idShort,
+                                    text: "#" + i.idShort,
                                     callback: function (t, opts) {
                                         t.showCard(i.id);
                                     }
