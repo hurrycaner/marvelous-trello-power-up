@@ -45,7 +45,8 @@ function showSearchCardButton(t) {
 //     return t.popup({
 //         title: 'Pull Requests',
 //         items: function (t, options) {
-    parent.t = t;
+    console.log('t: ', t);
+    console.log('t.getRestApi: ', t.getRestApi());
 //             // use options.search which is the search text entered so far
 //             // return a Promise that resolves to an array of items
 //             // similar to the items you provided in the client side version above
