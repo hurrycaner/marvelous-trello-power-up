@@ -49,7 +49,7 @@ function showSearchCardButton(t, opts) {
     console.log('context: ', t.getContext());
     console.log('opts: ', opts);
     Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
-    //     Trello.setToken(token);
+    Trello.setToken(token);
 
 
     // return t.getRestApi().getToken().then(function (token) {
