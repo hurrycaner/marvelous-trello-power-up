@@ -72,7 +72,8 @@ function showSearchCardButton(t, opts) {
                                 return [];
                             }
                             return result.filter(function (i) {
-                                return i.idShort == options.search;
+                                console.log("abacaxi", i);
+                                return i.idShort == options.search
                             }).map(function (i) {
                                 console.log("abacate", i);
                                 return [{
