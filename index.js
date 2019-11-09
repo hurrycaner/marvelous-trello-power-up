@@ -49,59 +49,58 @@ function showSearchCardButton(t, opts) {
     console.log('context: ', t.getContext());
     console.log('opts: ', opts);
     Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
-    Trello.setToken(token);
+    t.getRestApi().getToken().then(function (token) {
+        Trello.setToken(token);
+        return t.popup({
+            title: 'Card #',
+            items: function (t, options) {
+                // use options.search which is the search text entered so far
+                // return a Promise that resolves to an array of items
+                // similar to the items you provided in the client side version above
+                return Trello.get(
+                    "boards/" + t.getContext().board + "/cards",
+                    {
+                        query: options.search,
+                        fields: 'idShort'
+                    },
+                    function (result) {
+                        console.log(result);
+                        result.filter(function (i) {
+                            if (i.idShort == options.search) {
+                                return [{
+                                    text: i.idShort,
+                                    callback: function (t, opts) {
+                                        t.showCard(i.id);
+                                    }
+                                }]
+                            }
+                        });
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                )
 
-
-    // return t.getRestApi().getToken().then(function (token) {
-    return t.popup({
-        title: 'Card #',
-        items: function (t, options) {
-            // use options.search which is the search text entered so far
-            // return a Promise that resolves to an array of items
-            // similar to the items you provided in the client side version above
-            return Trello.get(
-                "boards/" + t.getContext().board + "/cards",
-                {
-                    query: options.search,
-                    fields: 'idShort'
-                },
-                function (result) {
-                    console.log(result);
-                    result.filter(function (i) {
-                        if (i.idShort == options.search) {
-                            return [{
-                                text: i.idShort,
-                                callback: function (t, opts) {
-                                    t.showCard(i.id);
-                                }
-                            }]
-                        }
-                    });
-                },
-                function (error) {
-                    console.log(error);
-                }
-            )
-
-            // return new Promise(function (resolve) {
-            //     // you'd probably be making a network request at this point
-            //     resolve([{
-            //         text: 'Result 1',
-            //         callback: function (t, opts) { ... }
-            //     }, {
-            //         text: 'Result 2',
-            //         callback: function (t, opts) { ... }
-            //     }]);
-            // });
-        },
-        search: {
-            // optional # of ms to debounce search to
-            // defaults to 300, override must be larger than 300
-            debounce: 300,
-            placeholder: 'Card #',
-            empty: 'Card não encontrado!',
-            searching: 'Buscando...'
-        }
+                // return new Promise(function (resolve) {
+                //     // you'd probably be making a network request at this point
+                //     resolve([{
+                //         text: 'Result 1',
+                //         callback: function (t, opts) { ... }
+                //     }, {
+                //         text: 'Result 2',
+                //         callback: function (t, opts) { ... }
+                //     }]);
+                // });
+            },
+            search: {
+                // optional # of ms to debounce search to
+                // defaults to 300, override must be larger than 300
+                debounce: 300,
+                placeholder: 'Card #',
+                empty: 'Card não encontrado!',
+                searching: 'Buscando...'
+            }
+        });
     });
 }
 
