@@ -65,7 +65,7 @@ function showSearchCardButton(t, opts) {
             // return a Promise that resolves to an array of items
             // similar to the items you provided in the client side version above
             return Trello.get(
-                "/boards/" + t.getContext().board + "/cards/?query=" + options.search + "fields=idShort",
+                "/boards/" + t.getContext().board + "/cards/?query=" + options.search + "&fields=idShort",
                 function (result) {
                     console.log(result);
                     return result.filter(function (i) {
