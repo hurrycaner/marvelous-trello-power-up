@@ -71,17 +71,17 @@ function showSearchCardButton(t, opts) {
                             if (options.search.length === 0) {
                                 return [];
                             }
-                            return result.map(function (i) {
-                                if (i.idShort == options.search) {
-                                    console.log("abacate", i);
-                                    return [{
-                                        text: "#" + i.idShort,
-                                        callback: function (t, opts) {
-                                            return t.showCard(i.id);
-                                        }
-                                    }]
-                                }
-                            });
+                            return result.filter(function (i) {
+                                return i.idShort == options.search;
+                            }).map(function (i) {
+                                console.log("abacate", i);
+                                return [{
+                                    text: "#" + i.idShort,
+                                    callback: function (t, opts) {
+                                        return t.showCard(i.id);
+                                    }
+                                }]
+                            })
                         },
                         function (error) {
                             console.log(error);
