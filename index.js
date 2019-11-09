@@ -53,7 +53,7 @@ function showSearchCardButton(t, opts) {
         console.log('1');
         Trello.setToken(token);
         console.log('2');
-        return t.popup({
+        t.popup({
             title: 'Card #',
             items: function (t, options) {
                 console.log('3');
