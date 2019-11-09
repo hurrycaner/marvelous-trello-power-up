@@ -76,7 +76,7 @@ function showSearchCardButton(t, opts) {
                                 return [{
                                     text: "#" + i.idShort,
                                     callback: function (t, opts) {
-                                        t.showCard(i.id);
+                                        return t.showCard(i.id);
                                     }
                                 }]
                             }
