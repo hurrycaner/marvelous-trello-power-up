@@ -49,11 +49,11 @@ function showSearchCardButton(t, opts) {
     console.log('context: ', t.getContext());
     console.log('opts: ', opts);
     Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
-    t.getRestApi().getToken().then(function (token) {
+    return t.getRestApi().getToken().then(function (token) {
         console.log('1');
         Trello.setToken(token);
         console.log('2');
-        t.popup({
+        return t.popup({
             title: 'Card #',
             items: function (t, options) {
                 console.log('3');
