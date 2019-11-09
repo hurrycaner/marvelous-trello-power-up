@@ -57,8 +57,7 @@ function showSearchCardButton(t, opts) {
                 // use options.search which is the search text entered so far
                 // return a Promise that resolves to an array of items
                 // similar to the items you provided in the client side version above
-                Promise()
-                Trello.get(
+                return Trello.get(
                     "boards/" + t.getContext().board + "/cards",
                     {
                         query: options.search,
