@@ -50,13 +50,10 @@ function showSearchCardButton(t, opts) {
     console.log('opts: ', opts);
     Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
     return t.getRestApi().getToken().then(function (token) {
-        console.log('1');
         Trello.setToken(token);
-        console.log('2');
         return t.popup({
             title: 'Card #',
             items: function (t, options) {
-                console.log('3');
                 // use options.search which is the search text entered so far
                 // return a Promise that resolves to an array of items
                 // similar to the items you provided in the client side version above
@@ -69,6 +66,7 @@ function showSearchCardButton(t, opts) {
                     function (result) {
                         console.log(result);
                         result.filter(function (i) {
+                            console.log('i: ', i);
                             if (i.idShort == options.search) {
                                 return [{
                                     text: i.idShort,
