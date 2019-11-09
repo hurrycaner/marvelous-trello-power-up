@@ -51,22 +51,24 @@ function showSearchCardButton(t, opts) {
     console.log('context: ', t.getContext());
     console.log('opts: ', opts);
     // return t.getRestApi().getToken().then(function (token) {
-    //     Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
+    Trello.setKey('0d7257e46f480534e1d50427e2afb1ee');
     //     Trello.setToken(token);
-    //     Trello.authorize({
-    //         type: 'popup',
-    //         name: 'Hurrycaner\'s Marvelous Power-Up',
-    //         persist: false,
-    //         interactive: false,
-    //         expiration: 'never'
-    //     });
-    //     Trello.get("/boards/" + t.getContext().board + "/cards/?fields=idShort",
-    //         function (result) {
-    //             console.log(result);
-    //         },
-    //         function (error) {
-    //             console.log(error);
-    //         })
+    Trello.authorize({
+        type: 'popup',
+        name: 'Hurrycaner\'s Marvelous Power-Up',
+        // persist: false,
+        // interactive: false,
+        expiration: 'never'
+    });
+    Trello.get(
+        "/boards/" + t.getContext().board + "/cards/?fields=idShort",
+        function (result) {
+            console.log(result);
+        },
+        function (error) {
+            console.log(error);
+        }
+    )
     // })
     // authorizeOpts =
     //   type - "redirect" or "popup"
