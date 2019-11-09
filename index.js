@@ -76,12 +76,12 @@ function showSearchCardButton(t, opts) {
                                 return i.idShort == options.search
                             }).map(function (i) {
                                 console.log("abacate", i);
-                                return [{
+                                return {
                                     text: "#" + i.idShort,
                                     callback: function (t, opts) {
-                                        return t.showCard(i.id);
+                                        return t.showCard(i.id)
                                     }
-                                }]
+                                }
                             })
                         },
                         function (error) {
