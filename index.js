@@ -68,7 +68,7 @@ function showSearchCardButton(t, opts) {
                 "/boards/" + t.getContext().board + "/cards/?query=" + options.search + "&fields=idShort",
                 function (result) {
                     console.log(result);
-                    return result.filter(function (i) {
+                    result.filter(function (i) {
                         if (i.idShort == options.search) {
                             return [{
                                 text: i.idShort,
