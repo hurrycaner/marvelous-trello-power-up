@@ -47,7 +47,8 @@ function showSearchCardButton(t) {
 //         items: function (t, options) {
     console.log('t: ', t);
     console.log('getRestApi: ', t.getRestApi());
-    console.log('board: ', t.getRestApi().t.board());
+    console.log('key: ', t.getRestApi().getKey());
+    console.log('token: ', t.getRestApi().getToken());
 //             // use options.search which is the search text entered so far
 //             // return a Promise that resolves to an array of items
 //             // similar to the items you provided in the client side version above
