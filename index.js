@@ -67,6 +67,9 @@ function showSearchCardButton(t, opts) {
                         console.log(result);
                         console.log('search: ', options.search, typeof options.search);
                         console.log('options: ', options);
+                        if (options.search.length === 0) {
+                            return [];
+                        }
                         result.filter(function (i) {
                             if (i.idShort == options.search) {
                                 console.log("abacate", i);
