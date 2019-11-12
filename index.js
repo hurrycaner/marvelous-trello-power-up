@@ -5,6 +5,10 @@
 
 var Promise = TrelloPowerUp.Promise;
 
+const WHITE_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg';
+const BLACK_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg';
+const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
+
 var getIdBadge = function (t) {
     return t
         .card('idShort')
@@ -22,10 +26,6 @@ const onBtnClick = function (t, opts) {
     console.log('t: ', t);
     console.log('opts: ', opts);
 };
-
-const WHITE_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-white.svg';
-const BLACK_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-black.svg';
-const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
 
 function showAuthorizationIframe(t) {
     return t.popup({
@@ -126,6 +126,18 @@ TrelloPowerUp.initialize({
             });
         },
         'card-buttons': function (t, options) {
+            const epicBtn = {
+                text: 'Epic',
+                condition: 'always',
+                callback: function (t, opts) {
+                    return t.popup({
+                        title: 'Change Snooze Time',
+                        url: './card-button.html',
+                        args: { myArgs: 'You can access these with t.arg()' },
+                        height: 278 // initial height, can be changed later
+                    });
+                }
+            };
             const epicBtnShow = {
                 // icon: GRAY_ICON,
                 text: 'Epic (show)',

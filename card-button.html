@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang=en>
+<head>
+    <meta charset=utf-8>
+    <title>Epic</title>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+</head>
+<body>
+<button type="button">Show / Hide</button>
+<script src="https://p.trellocdn.com/power-up.min.js"></script>
+<script>
+    var t = window.TrelloPowerUp.iframe({
+        appKey: "0d7257e46f480534e1d50427e2afb1ee",
+        appName: "Hurrycaner's Marvelous Power-Up",
+    });
+    t.render(function () {
+        // document.querySelector('button').addEventListener('click', function () {
+        //     t.getRestApi()
+        //         .authorize({scope: 'read'})
+        //         .then(function (t) {
+        //             t.alert({
+        //                 message: 'Autorização realizada com sucesso!🎉',
+        //                 duration: 6,
+        //                 display: 'success'
+        //             });
+        //             t.closePopup();
+        //         })
+        //         .catch(TrelloPowerUp.restApiError.AuthDeniedError, function () {
+        //             t.alert({
+        //                 message: 'Autorização não realizada!🎉',
+        //                 duration: 6,
+        //                 display: 'error'
+        //             });
+        //         })
+        // }, false);
+    });
+</script>
+</body>
+</html>

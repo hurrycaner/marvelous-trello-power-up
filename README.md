@@ -15,10 +15,11 @@ https://developers.trello.com/reference#card-badges
             - [ ] Já linkado: botão remover link (ícone ?)
     - [ ] Botão: Adicionar feature (ícone de +)
 - [ ] card-badges
-    - [ ] Texto: card magic number
+    - [x] Texto: card magic number
     - [ ] Texto: número de features completas / número total de features
 - [ ] card-detail-badges
-    - [ ] Texto: card magic number
+    - [x] Texto: card magic number
+    - [ ] Texto: número de features completas / número total de features
 
 ### Feature Card:
 - [ ] card-back-section
