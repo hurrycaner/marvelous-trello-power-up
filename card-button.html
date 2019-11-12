@@ -7,33 +7,59 @@
 </head>
 <body>
 <button type="button">Show / Hide</button>
+
+<label>
+    <input type="radio" name="visibility" value="auto"> Automático
+</label>
+<label>
+    <input type="radio" name="visibility" value="show"> Sempre exibir
+</label>
+<label>
+    <input type="radio" name="visibility" value="hide"> Sempre ocultar
+</label>
+
+<script type="text/javascript" src="vue.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "body",
+        data: {
+            epic: [
+                {name: "bla", done: false, card: null},
+                {name: "ble", done: false, card: null}
+            ]
+        }
+    });
+</script>
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
 <script>
     var t = window.TrelloPowerUp.iframe({
         appKey: "0d7257e46f480534e1d50427e2afb1ee",
         appName: "Hurrycaner's Marvelous Power-Up",
     });
-    t.render(function () {
-        // document.querySelector('button').addEventListener('click', function () {
-        //     t.getRestApi()
-        //         .authorize({scope: 'read'})
-        //         .then(function (t) {
-        //             t.alert({
-        //                 message: 'Autorização realizada com sucesso!🎉',
-        //                 duration: 6,
-        //                 display: 'success'
-        //             });
-        //             t.closePopup();
-        //         })
-        //         .catch(TrelloPowerUp.restApiError.AuthDeniedError, function () {
-        //             t.alert({
-        //                 message: 'Autorização não realizada!🎉',
-        //                 duration: 6,
-        //                 display: 'error'
-        //             });
-        //         })
-        // }, false);
-    });
+    console.log(window.vm);
+    // t.render(function () {
+    //     var visibility = document.getElementsByName("visibility")
+
+    // document.querySelector('button').addEventListener('click', function () {
+    //     t.getRestApi()
+    //         .authorize({scope: 'read'})
+    //         .then(function (t) {
+    //             t.alert({
+    //                 message: 'Autorização realizada com sucesso!🎉',
+    //                 duration: 6,
+    //                 display: 'success'
+    //             });
+    //             t.closePopup();
+    //         })
+    //         .catch(TrelloPowerUp.restApiError.AuthDeniedError, function () {
+    //             t.alert({
+    //                 message: 'Autorização não realizada!🎉',
+    //                 duration: 6,
+    //                 display: 'error'
+    //             });
+    //         })
+    // }, false);
+    // });
 </script>
 </body>
 </html>

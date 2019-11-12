@@ -1,29 +1,26 @@
 <html>
 <head>
     <title>VueJs Introduction</title>
-    <script
-            type="text/javascript"
-            src="vue.min.js"
-    ></script>
 </head>
 <body>
 <div id="intro" style="text-align:center;">
     <div v-for="f in epic">
-        <input type="checkbox" name="done" v-model="f.done" />
+        <input type="checkbox" name="done" v-model="f.done"/>
         {{ f.name }}
-        <input type="button" @click="" name="delete" value="X" />
-        <input type="button" @click="" name="open" value="Ir" />
+        <input type="button" @click="" name="delete" value="X"/>
+        <input type="button" @click="" name="open" value="Ir"/>
     </div>
-    <hr />
+    <hr/>
     <div>{{ epic }}</div>
 </div>
+<script type="text/javascript" src="vue.min.js"></script>
 <script type="text/javascript">
-    var vue_det = new Vue({
+    var vm = new Vue({
         el: "#intro",
         data: {
             epic: [
-                { name: "bla", done: false, card: null },
-                { name: "ble", done: false, card: null }
+                {name: "bla", done: false, card: null},
+                {name: "ble", done: false, card: null}
             ]
         }
     });

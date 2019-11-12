@@ -131,9 +131,9 @@ TrelloPowerUp.initialize({
                 condition: 'always',
                 callback: function (t, opts) {
                     return t.popup({
-                        title: 'Change Snooze Time',
+                        title: 'Epic',
                         url: './card-button.html',
-                        args: { myArgs: 'You can access these with t.arg()' },
+                        args: {myArgs: 'You can access these with t.arg()'},
                         height: 278 // initial height, can be changed later
                     });
                 }
