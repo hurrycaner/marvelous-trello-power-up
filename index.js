@@ -158,12 +158,15 @@ TrelloPowerUp.initialize({
                 t.get('card', 'private', 'epic', null),
                 t.get('card', 'shared', 'feat', [])
             ]).then(function (result) {
-                let ret = [{
-                    icon: GRAY_ICON,
-                    text: 'Link to feature',
-                    callback: onBtnClick,
-                    condition: 'edit'
-                }];
+                let ret = [
+                    epicBtn,
+                    {
+                        icon: GRAY_ICON,
+                        text: 'Link to feature',
+                        callback: onBtnClick,
+                        condition: 'edit'
+                    }
+                ];
                 if (result[0] === true) {
                     ret.push(epicBtnHide);
                 } else if (result[0] === false) {
