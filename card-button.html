@@ -23,22 +23,20 @@
     var vm = new Vue({
         el: "#app",
         beforeMount: function () {
-            this.t = t;
         },
         data: {
             epic: [
                 {name: "bla", done: false, card: null},
                 {name: "ble", done: false, card: null}
             ],
-            t: null
         },
         computed: {
             visibility: {
                 get: function () {
-                    this.t.get('card', 'shared', 'epic', null);
+                    t.get('card', 'shared', 'epic', null);
                 },
                 set: function (val) {
-                    this.t.set('card', 'shared', 'epic', val);
+                    t.set('card', 'shared', 'epic', val);
                 }
             }
         }
