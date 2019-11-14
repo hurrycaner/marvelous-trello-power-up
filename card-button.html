@@ -33,10 +33,12 @@
         computed: {
             visibility: {
                 get: function () {
-                    t.get('card', 'shared', 'epic', null);
+                    console.log(t.get('card', 'shared', 'epic', null));
+                    return t.get('card', 'shared', 'epic', null);
                 },
                 set: function (val) {
                     t.set('card', 'shared', 'epic', val);
+                    console.log(t.get('card', 'shared', 'epic', null));
                 }
             }
         }
