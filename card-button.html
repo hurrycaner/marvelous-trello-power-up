@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
 </head>
 <body>
-<button type="button">Show / Hide</button>
+<div id="app">
+    <button type="button">Show / Hide</button>
 
-<label><input type="radio" v-model="visibility" :value="null"> Automático</label>
-<label><input type="radio" v-model="visibility" :value="true"> Sempre exibir</label>
-<label><input type="radio" v-model="visibility" :value="false"> Sempre ocultar</label>
-
+    <label><input type="radio" v-model="visibility" :value="null"> Automático</label>
+    <label><input type="radio" v-model="visibility" :value="true"> Sempre exibir</label>
+    <label><input type="radio" v-model="visibility" :value="false"> Sempre ocultar</label>
+</div>
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
 <script type="text/javascript" src="vue.min.js"></script>
 <script type="text/javascript">
     var vm = new Vue({
-        el: "body",
+        el: "#app",
         beforeMount: function () {
             this.t = window.TrelloPowerUp.iframe({
                 appKey: "0d7257e46f480534e1d50427e2afb1ee",
@@ -32,10 +33,10 @@
         },
         computed: {
             visibility: {
-                get: function() {
+                get: function () {
                     this.t.get('card', 'shared', 'epic', null)
                 },
-                set: function(val) {
+                set: function (val) {
                     this.t.set('card', 'shared', 'epic', val)
                 }
             }
