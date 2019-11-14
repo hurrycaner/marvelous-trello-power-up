@@ -16,13 +16,14 @@
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
 <script type="text/javascript" src="vue.min.js"></script>
 <script type="text/javascript">
+    var t = window.TrelloPowerUp.iframe({
+        appKey: "0d7257e46f480534e1d50427e2afb1ee",
+        appName: "Hurrycaner's Marvelous Power-Up",
+    });
     var vm = new Vue({
         el: "#app",
         beforeMount: function () {
-            this.t = window.TrelloPowerUp.iframe({
-                appKey: "0d7257e46f480534e1d50427e2afb1ee",
-                appName: "Hurrycaner's Marvelous Power-Up",
-            })
+            this.t = t;
         },
         data: {
             epic: [
@@ -34,10 +35,10 @@
         computed: {
             visibility: {
                 get: function () {
-                    this.t.get('card', 'shared', 'epic', null)
+                    this.t.get('card', 'shared', 'epic', null);
                 },
                 set: function (val) {
-                    this.t.set('card', 'shared', 'epic', val)
+                    this.t.set('card', 'shared', 'epic', val);
                 }
             }
         }
