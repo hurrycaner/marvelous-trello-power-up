@@ -24,19 +24,19 @@
     var vm = new Vue({
         el: "#app",
         beforeMount: function () {
-            t.get('card', 'shared', 'epic', null).then(function (data) {
-                this.epic = data;
+            t.get('card', 'private', 'epic', null).then(function (data) {
                 console.log('data', data);
+                this.visibility = data;
             })
         },
         data: {
-            epic: null,
             visibility: null
         },
         watch: {
             visibility: function (nv, ov) {
                 console.log('nv', nv, 'ov', ov);
-                //
+                t.set('card', 'private', 'epic', nv);
+                this.visibility = nv;
             }
         }
     });
