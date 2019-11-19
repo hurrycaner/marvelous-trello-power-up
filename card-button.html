@@ -26,13 +26,19 @@
         beforeMount: function () {
             t.get('card', 'shared', 'epic', null).then(function (data) {
                 this.epic = data;
-                console.log(this.epic);
+                console.log('data', data);
             })
         },
         data: {
             epic: null,
             visibility: null
         },
+        watch: {
+            visibility: function (nv, ov) {
+                console.log('nv', nv, 'ov', ov);
+                //
+            }
+        }
     });
 </script>
 </body>
