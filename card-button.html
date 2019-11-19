@@ -9,9 +9,9 @@
 <div id="app">
     <button type="button">Show / Hide</button>
 
-    <label><input type="radio" v-model="visibility" value="null"> Automático</label>
-    <label><input type="radio" v-model="visibility" value="true"> Sempre exibir</label>
-    <label><input type="radio" v-model="visibility" value="false"> Sempre ocultar</label>
+    <label><input type="radio" v-model="visibility" :value="null"> Automático</label>
+    <label><input type="radio" v-model="visibility" :value="true"> Sempre exibir</label>
+    <label><input type="radio" v-model="visibility" :value="false"> Sempre ocultar</label>
 </div>
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -28,6 +28,7 @@
             t.get('card', 'private', 'epic', null).then(function (data) {
                 console.log('data', data);
                 this.visibility = data;
+                console.log('visibility', this.visibility);
             });
         },
         data: {
@@ -39,6 +40,7 @@
                 if (nv === ov) return;
                 t.set('card', 'private', 'epic', nv);
                 this.visibility = nv;
+                console.log('visibility', this.visibility);
             }
         }
     });
