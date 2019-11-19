@@ -23,23 +23,8 @@
     });
     var vm = new Vue({
         el: "#app",
-        beforeCreate: function () {
-            console.log('beforeCreate');
-        },
-        created: function () {
-            console.log('created');
-        },
         mounted: function () {
             console.log('mounted');
-        },
-        beforeUpdate: function () {
-            console.log('beforeUpdate');
-        },
-        updated: function () {
-            console.log('updated');
-        },
-        beforeMount: function () {
-            console.log('beforeMount');
             t.get('card', 'private', 'epic', null).then(function (data) {
                 console.log('data', data);
                 this.visibility = data;
@@ -51,6 +36,7 @@
         watch: {
             visibility: function (nv, ov) {
                 console.log('nv', nv, 'ov', ov);
+                if (nv === ov) return;
                 t.set('card', 'private', 'epic', nv);
                 this.visibility = nv;
             }
