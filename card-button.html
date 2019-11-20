@@ -9,7 +9,7 @@
 <div id="app">
     <button type="button">Show / Hide</button>
 
-    <label><input type="radio" v-model="visibility" value> Automático</label>
+    <label><input type="radio" v-model="visibility" value=""> Automático</label>
     <label><input type="radio" v-model="visibility" value="1"> Sempre exibir</label>
     <label><input type="radio" v-model="visibility" value="0"> Sempre ocultar</label>
 </div>
@@ -25,7 +25,7 @@
         el: "#app",
         mounted: function () {
             console.log('mounted');
-            t.get('card', 'private', 'epic', null).then(function (data) {
+            t.get('card', 'private', 'epic', '').then(function (data) {
                 console.log('data', data);
                 vm.visibility = data;
                 console.log('visibility', vm.visibility);
@@ -38,12 +38,10 @@
             visibility: function (nv, ov) {
                 console.log('nv', nv, 'ov', ov);
                 if (nv === ov) return;
-                if (nv === '') {
-                    this.visibility = null;
-                } else {
-                    this.visibility = nv;
-                }
-                t.set('card', 'private', 'epic', this.visibility);
+                let val = null;
+                if (nv === '1' || nv === '0')
+                    val = nv;
+                t.set('card', 'private', 'epic', val);
                 console.log('visibility', this.visibility);
             }
         }
