@@ -27,8 +27,8 @@
             console.log('mounted');
             t.get('card', 'private', 'epic', null).then(function (data) {
                 console.log('data', data);
-                this.visibility = data;
-                console.log('visibility', this.visibility);
+                vm.visibility = data;
+                console.log('visibility', vm.visibility);
             });
         },
         data: {
@@ -38,8 +38,12 @@
             visibility: function (nv, ov) {
                 console.log('nv', nv, 'ov', ov);
                 if (nv === ov) return;
-                t.set('card', 'private', 'epic', nv);
-                this.visibility = nv;
+                if (nv === '') {
+                    this.visibility = null;
+                } else {
+                    this.visibility = nv;
+                }
+                t.set('card', 'private', 'epic', this.visibility);
                 console.log('visibility', this.visibility);
             }
         }
