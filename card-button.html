@@ -37,11 +37,12 @@
         watch: {
             visibility: function (nv, ov) {
                 console.log('nv', nv, 'ov', ov);
+                console.log('1: ', nv === '1', '0: ', nv === '0');
                 if (nv === ov) return;
-                let val = null;
                 if (nv === '1' || nv === '0')
-                    val = nv;
-                t.set('card', 'private', 'epic', val);
+                    t.set('card', 'private', 'epic', nv);
+                else
+                    t.remove('card', 'private', 'epic');
                 console.log('visibility', this.visibility);
             }
         }
