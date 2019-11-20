@@ -7,11 +7,9 @@
 </head>
 <body>
 <div id="app">
-    <button type="button">Show / Hide</button>
-
     <label><input type="radio" v-model="visibility" value=""> Automático</label>
-    <label><input type="radio" v-model="visibility" value="1"> Sempre exibir</label>
-    <label><input type="radio" v-model="visibility" value="0"> Sempre ocultar</label>
+    <label><input type="radio" v-model="visibility" :value="true"> Sempre exibir</label>
+    <label><input type="radio" v-model="visibility" :value="false"> Sempre ocultar</label>
 </div>
 <script src="https://p.trellocdn.com/power-up.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -26,9 +24,7 @@
         mounted: function () {
             console.log('mounted');
             t.get('card', 'private', 'epic', '').then(function (data) {
-                console.log('data', data);
                 vm.visibility = data;
-                console.log('visibility', vm.visibility);
             });
         },
         data: {
@@ -36,14 +32,11 @@
         },
         watch: {
             visibility: function (nv, ov) {
-                console.log('nv', nv, 'ov', ov);
-                console.log('1: ', nv === '1', '0: ', nv === '0');
                 if (nv === ov) return;
-                if (nv === '1' || nv === '0')
+                if (nv === true || nv === false)
                     t.set('card', 'private', 'epic', nv);
                 else
                     t.remove('card', 'private', 'epic');
-                console.log('visibility', this.visibility);
             }
         }
     });
